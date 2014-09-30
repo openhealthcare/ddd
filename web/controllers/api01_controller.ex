@@ -10,6 +10,7 @@ defmodule Ddd.Api01Controller do
   end
 
   def change(conn, %{"pre" => pre, "post" => post, "endpoint" => endpoint}) do
+    Phoenix.Topic.broadcast "decision", {:change , pre: pre, post: post, endpoint: endpoint}
     json conn, JSON.encode!(%{:success => "We got your change. We'll be in touch."})
   end
 
