@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello DDD!</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/ddd.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="https://github.com/openhealthcare/ddd">Get Started</a></li>
+        </ul>
+        <span class="logo">
+          <img src="http://openhealthcare.org.uk/images/toplogo.png" />
+        </span>
+      </div>
+
+      <%= @inner %>
+
+      <div class="footer">
+        <p><a href="http://openhealthcare.org.uk">openhealthcare.org.uk</a></p>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>
