@@ -10,15 +10,18 @@ defmodule Ddd.Decider do
   def decide do
     receive do
       { :change, params } ->
-        IO.puts "Called change for endpoint #{params[:endpoint]}"
-        
-        IO.puts params[:post]
-        #IO.puts JSON.decode(params[:post])
+        {:ok, pre}  = Poison.decode("#{params[:pre]}")
+        {:ok, post} = Poison.decode("#{params[:pre]}")
+        endpoint    = params[:endpoint]
 
-        # cond do
-        #   post["date_of_admission"].starts_with? "2014" ->
-        #     IO.puts "Episode from 2014"
-        # end
+        IO.puts "Called change for endpoint #{endpoint}"
+
+        cond do
+          post["date_of_admission"].starts_with? "2014" ->
+            IO.puts "Episode from 2014"
+          true ->
+            IO.puts "No Rules"
+        end
               
       _ ->
     end
