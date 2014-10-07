@@ -1,0 +1,14 @@
+<a href="/api/v0.1/" class='pull-right btn btn-default'>
+    <i class="glyphicon glyphicon-chevron-left"></i>
+    Back
+</a>
+<h1>/rules</h1>
+
+<p class="lead">
+  View existing rules
+</p>
+<h4>Params</h4>
+<ul>
+  <li>offset: The number of items to skip</li>
+  <li>limit: The total number of rules to return</li>
+</ul>

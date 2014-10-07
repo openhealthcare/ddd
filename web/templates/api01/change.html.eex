@@ -1,6 +1,11 @@
+<a href="/api/v0.1/" class='pull-right btn btn-default'>
+    <i class="glyphicon glyphicon-chevron-left"></i>
+    Back
+</a>
 <h1>/change</h1>
+
 <p class="lead">
-  Notify DDD of a change. 
+  Notify DDD of a change.
 </p>
 <h4>Params</h4>
 <ul>

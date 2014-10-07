@@ -1,6 +1,6 @@
 defmodule Ddd.Api01Controller do
   use Phoenix.Controller
-  
+
   def index(conn, _params) do
     render conn, "index"
   end
@@ -17,5 +17,13 @@ defmodule Ddd.Api01Controller do
   def change(conn, _params) do
     json conn, JSON.encode!(%{:error => "You really need to provide some input data Larry. Try pre, post and endpoint ;)"})
   end
-  
+
+  def rulesdoc(conn, _params) do
+    render conn, "rules"
+  end
+
+  def rules(conn, _params) do
+    json conn, JSON.encode!(Ddd.Ruler.rules)
+  end
+
 end

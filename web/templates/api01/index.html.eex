@@ -3,3 +3,26 @@
   <h4>DDD Has some APIs. These are version 0.1.</h4>
 </div>
 
+<table class="table">
+<tr>
+    <th>change</th>
+    <td>Makes a decision based on the before, and after, data.</td>
+    <td>
+        <a class="btn btn-primary" href="change">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            View
+        </a>
+    </td>
+</tr>
+<tr>
+    <th>rules</th>
+    <td>Provides a place where you can look at the current rules defined in DDD</td>
+    <td>
+        <a class="btn btn-primary" href="rules">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            View
+        </a>
+    </td>
+</tr>
+</table>
+
