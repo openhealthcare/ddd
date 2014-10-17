@@ -27,8 +27,9 @@ defmodule Ddd.Mixfile do
     [
       {:phoenix, "0.4.1"},
       {:cowboy, "~> 1.0.0"},
-      {:mailgun, "~> 0.0.1"}
+      {:mailgun, "~> 0.0.1"},
+      {:httpoison, "~> 0.4"}
     ]
   end
-
+  
 end
