@@ -23,6 +23,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :ddd, mailgun_domain: "sandbox2f06dae5c6c840b9824a8160a83e0e72.mailgun.org",
+             mailgun_key: System.get_env("MAILGUN_KEY")
+
+  
 # Import environment specific config. Note, this must remain at the bottom of
 # this file to properly merge your previous config entries.
 import_config "#{Mix.env}.exs"
+
+
+

@@ -6,7 +6,8 @@ defmodule Ddd.Mixfile do
       version: "0.0.1",
       elixir: "~> 1.0.0-rc1",
       elixirc_paths: ["lib", "web"],
-      deps: deps ]
+      deps: deps
+    ]
   end
 
   # Configuration for the OTP application
@@ -25,7 +26,9 @@ defmodule Ddd.Mixfile do
   defp deps do
     [
       {:phoenix, "0.4.1"},
-      {:cowboy, "~> 1.0.0"}
+      {:cowboy, "~> 1.0.0"},
+      {:mailgun, "~> 0.0.1"}
     ]
   end
+
 end
