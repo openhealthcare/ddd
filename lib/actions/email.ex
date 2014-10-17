@@ -3,6 +3,9 @@ defmodule Ddd.Actions.Email do
                       key: Application.get_env(:ddd, :mailgun_key)
   @from "info@example.com"
  
+  @doc"""
+  Send an email to TO, with SUBJECT and BODY
+  """
   def send(to, subject, body) do
     IO.puts "sending"
 

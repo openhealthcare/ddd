@@ -9,6 +9,16 @@ defmodule Ddd.Decider do
     {:ok, sub}
   end
 
+  @doc"""
+  Perform BEHAVIOUR for ACTION with PRE and POST, returning to ENDPOINT as required
+  """
+  def behave(behaviour, action, {pre, post, endpoint}) do
+    Ddd.Matcher.process_block behaviour, {pre, post}
+  end
+
+  @doc"""
+  Decide on what to do for change events.
+  """
   def decide do
     receive do
       { :change, params } ->
@@ -17,34 +27,11 @@ defmodule Ddd.Decider do
         endpoint    = params[:endpoint]
 
         IO.puts "Called change for endpoint #{endpoint}"
-        IO.puts "#{post["date_of_admission"]}"
 
-        cond do
-          String.starts_with? post["date_of_admission"], "2014" ->
-            IO.puts "Episode from 2014"
-            Email.send "david@deadpansincerity.com", "Hai from DDD", "This is an email from DDD"
-
-            demographics = hd(post["demographics"])
-            patient_id = "#{demographics["patient_id"]}"
-            IO.puts patient_id
-            
-            episode_id = "#{post["id"]}"
-            IO.puts episode_id
-
-            return = %{
-                       :status => :ok,
-                       :type => :msg, 
-                       :value => "OMG Admitted in 2014!",
-                       :patient => patient_id, 
-                       :episode =>episode_id
-                   }
-            ReturnToSender.send endpoint, return 
-          true ->
-            IO.puts "No Rules"
-        end
-              
+        Path.wildcard("behaviours/*/*.behaviour")
+          |> Enum.map(&(behave &1, :change, {pre, post, endpoint}))
       _ ->
     end
-    decide
+  decide
   end
 end

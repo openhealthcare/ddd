@@ -5,8 +5,12 @@ defmodule Ddd.Matcher do
         File.stream!(filename, [:utf8, :read]) |> Enum.take_while fn(x) ->
             {ok, msg} = process_line(String.strip(x), {pre, post})
             case ok do
-                :fail -> false   # Abort (the take_while)
-                :ok -> true
+                :fail ->
+                  IO.puts "Fails line"
+                  false   # Abort (the take_while)
+                :ok ->
+                  IO.puts "MATCH!"
+                  true
             end
         end
     end
@@ -29,6 +33,8 @@ defmodule Ddd.Matcher do
         # Replace when at start with when_
         case str do
             :when ->
+                :when_
+            :When ->
                 :when_
             :and ->
                 :when_
