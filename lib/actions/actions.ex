@@ -43,7 +43,6 @@ defmodule Ddd.Actions do
     def return(behaviour, [msg], {pre, post}) do
         IO.puts "return action"
         contents = EEx.eval_file template(behaviour, msg), [pre: pre, post: post]
-        {:ok, "Sent"}
     end
 
     def sms(behaviour, [msg, :to, number], {pre, post}) do

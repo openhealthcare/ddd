@@ -1,5 +1,7 @@
 defmodule Ddd.Actions.ReturnToSender do
   
+  @actually_send Mix.Project.config[:external_actions]
+
   @doc"""
   Send a MESSAGE to ENDPOINT
 
@@ -18,9 +20,13 @@ defmodule Ddd.Actions.ReturnToSender do
 
     IO.puts as_json
     IO.puts endpoint
+    
+    if @actually_send do
+      HTTPoison.start
+      HTTPoison.post endpoint, as_json
+    end
 
-    HTTPoison.start
-    HTTPoison.post endpoint, as_json
+    {:ok, "Sent"}
   end
 
 end

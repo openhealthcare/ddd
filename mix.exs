@@ -6,7 +6,8 @@ defmodule Ddd.Mixfile do
       version: "0.0.1",
       elixir: "~> 1.0.0-rc1",
       elixirc_paths: ["lib", "web"],
-      deps: deps
+      deps: deps,
+      external_actions: external_actions(Mix.env)
     ]
   end
 
@@ -31,5 +32,8 @@ defmodule Ddd.Mixfile do
       {:httpoison, "~> 0.4"}
     ]
   end
+
+  defp external_actions(:test), do: false
+  defp external_actions(_), do: true
   
 end
