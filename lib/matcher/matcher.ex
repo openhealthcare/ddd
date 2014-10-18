@@ -2,17 +2,22 @@
 defmodule Ddd.Matcher do
 
     def process_block(filename, {pre, post}) do
+        success = true
+
         File.stream!(filename, [:utf8, :read]) |> Enum.take_while fn(x) ->
             {ok, msg} = process_line(String.strip(x), {pre, post})
             case ok do
                 :fail ->
                   IO.puts "Fails line"
+                  success = false
                   false   # Abort (the take_while)
                 :ok ->
                   IO.puts "MATCH!"
                   true
             end
         end
+
+        success
     end
 
     def process_line(sentence, {pre, post}) do

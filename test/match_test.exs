@@ -34,4 +34,12 @@ defmodule MatchTest do
     assert(ok == :fail)
   end
 
+  test "sample behaviour" do
+    pre = %{ "key"=> "friday"}
+    post = %{ "diagnosis"=> "CAP"}
+
+    assert( true ==  Ddd.Matcher.process_block("behaviours/sample/sample.behaviour", {pre, post}) )
+
+  end
+
 end
