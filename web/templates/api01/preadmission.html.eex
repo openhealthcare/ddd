@@ -1,0 +1,10 @@
+<h1>/preadmission</h1>
+<p class="lead">
+  Notify DDD of a pre-admission.
+</p>
+<h4>Params</h4>
+<ul>
+  <li>pre: JSON Serialized state before the change</li>
+  <li>post: JSON Serialized state after the change</li>
+  <li>endpoint: Place to POST any resulting triggers from this change</li>
+</ul>

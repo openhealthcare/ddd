@@ -1,6 +1,6 @@
 defmodule Ddd.Api01Controller do
   use Phoenix.Controller
-  
+
   def index(conn, _params) do
     render conn, "index"
   end
@@ -46,12 +46,43 @@ defmodule Ddd.Api01Controller do
     render conn, "transfer"
   end
 
-  def transfer(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
-    Phoenix.Topic.broadcast "decision", {:transfer, pre: pre, post: post, endpoint: endpoint}
+  # ADT-A04 – Patient Registration
+  def registration(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
+    Phoenix.Topic.broadcast "decision", {:registration, pre: pre, post: post, endpoint: endpoint}
   end
 
-  def transfer(conn, _params) do
+  def registration(conn, _params) do
     json conn, JSON.encode!(%{:error => "You really need to provide some input data Larry. Try pre, post and endpoint ;)"})
   end
-  
+
+  def registrationdoc(conn, _params) do
+    render conn, "registration"
+  end
+
+  # ADT-A05 – patient pre-admission
+  def preadmission(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
+    Phoenix.Topic.broadcast "decision", {:preadmission, pre: pre, post: post, endpoint: endpoint}
+  end
+
+  def preadmission(conn, _params) do
+    json conn, JSON.encode!(%{:error => "You really need to provide some input data Larry. Try pre, post and endpoint ;)"})
+  end
+
+  def preadmissiondoc(conn, _params) do
+    render conn, "preadmission"
+  end
+
+  # ADT-A08 – patient information update
+  def update(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
+    Phoenix.Topic.broadcast "decision", {:update, pre: pre, post: post, endpoint: endpoint}
+  end
+
+  def update(conn, _params) do
+    json conn, JSON.encode!(%{:error => "You really need to provide some input data Larry. Try pre, post and endpoint ;)"})
+  end
+
+  def updatedoc(conn, _params) do
+    render conn, "update"
+  end
+
 end
