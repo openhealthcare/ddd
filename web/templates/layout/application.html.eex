@@ -19,7 +19,7 @@
           <li><a href="https://github.com/openhealthcare/ddd">Get Started</a></li>
         </ul>
         <span class="logo">
-          <img src="http://openhealthcare.org.uk/assets/images/toplogo.png" />
+          <img src="/images/toplogo.png" width="289px" height="70px"/>
         </span>
       </div>
 
