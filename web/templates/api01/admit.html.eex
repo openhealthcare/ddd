@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="/api/v0.1/">API v0.1</a></li>
+  <li class="active">admit</li>
+</ol>
 <h1>/admit</h1>
 <p class="lead">
   Notify DDD of an admission.

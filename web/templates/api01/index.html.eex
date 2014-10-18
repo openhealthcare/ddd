@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="/api/v0.1/">API v0.1</a></li>
+</ol>
 <div class="jumbotron">
   <h2>Hello Beautiful World</h2>
   <h4>DDD Has some APIs. These are version 0.1.</h4>
