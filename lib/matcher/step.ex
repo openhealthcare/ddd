@@ -43,19 +43,19 @@ defmodule Ddd.Matcher.Step do
         end
     end
 
-    def when_([key, :is, value], {pre, post}) do
+    def when_(behaviour, [key, :is, value], {pre, post}) do
         match = json_property_matches key, post, value
         provide_result match, "Does not match", {pre, post}
     end
 
-    def when_([key, :was, value], {pre, post}) do
+    def when_(behaviour, [key, :was, value], {pre, post}) do
         match = json_property_matches key, pre, value
         provide_result match, "Does not match", {pre, post}
     end
 
-    def then([h|t], {pre, post}) do
+    def then(behaviour, [h|t], {pre, post}) do
         # We want to apply the action h and pass t as the args
-        apply(Actions, h, [t, {pre,post}])
+        apply(Actions, h, [behaviour, t, {pre,post}])
     end
 
 end

@@ -13,6 +13,7 @@ defmodule Ddd.Actions.Email do
              from: @from,
           subject: subject,
              body: body
+    {:ok, "Sent"}
   end
   
 end
