@@ -1,33 +1,32 @@
 defmodule Ddd.Actions.ReturnToSender do
   
+  @actually_send Mix.Project.config[:external_actions]
+
   @doc"""
   Send a MESSAGE to ENDPOINT
 
   Typically ENDPOINT is provided to an API call as the return 
   path for messages.
   """
-  def send(endpoint, message) do
+  def send(endpoint, {patient_id, episode_id}, value) do
+    message = %{
+                :status => :ok,
+                :type => :msg, 
+                :value => value,
+                :patient => patient_id, 
+                :episode =>episode_id
+            }
     {:ok, as_json} =  Poison.encode message, string: true 
 
     IO.puts as_json
     IO.puts endpoint
+    
+    if @actually_send do
+      HTTPoison.start
+      HTTPoison.post endpoint, as_json
+    end
 
-    HTTPoison.start
-    HTTPoison.post endpoint, as_json
+    {:ok, "Sent"}
   end
 
 end
-        #     demographics = hd(post["demographics"])
-        #     patient_id = "#{demographics["patient_id"]}"
-        #     IO.puts patient_id
-        #     episode_id = "#{post["id"]}"
-        #     IO.puts episode_id
-
-        #     return = %{
-        #                :status => :ok,
-        #                :type => :msg, 
-        #                :value => "OMG Admitted in 2014!",
-        #                :patient => patient_id, 
-        #                :episode =>episode_id
-        #            }
-        #     ReturnToSender.send endpoint, return 

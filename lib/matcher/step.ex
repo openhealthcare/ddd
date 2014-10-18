@@ -34,6 +34,21 @@ defmodule Ddd.Matcher.Step do
     end
   end
 
+  @doc"""
+  For a nested series of JSON objects MAP, find out if there is a
+  property KEY with a value that contains VALUE.
+
+  KEY will be expressed as foo.bar.baz
+  """
+  defp json_property_contains(key, map, value) do
+    jsonvalue = get_value key, map
+    if is_list jsonvalue do
+      Enum.any? jsonvalue, fn(x) -> String.contains? String.downcase(x), String.downcase(value) end
+    else
+      String.contains? jsonvalue, value
+    end
+  end
+
     defp provide_result(success, err \\ "", {pre, post}) do
         case success do
           true ->
@@ -43,19 +58,27 @@ defmodule Ddd.Matcher.Step do
         end
     end
 
-    def when_([key, :is, value], {pre, post}) do
+    def when_(behaviour, [key, :is, value], {pre, post}) do
         match = json_property_matches key, post, value
         provide_result match, "Does not match", {pre, post}
     end
 
-    def when_([key, :was, value], {pre, post}) do
+    def when_(behaviour, [key, :was, value], {pre, post}) do
         match = json_property_matches key, pre, value
         provide_result match, "Does not match", {pre, post}
     end
 
-    def then([h|t], {pre, post}) do
+    def when_(behaviour, [key, :did, :contain, value], {pre, post}) do
+      match = json_property_contains key, pre, value
+      provide_result match, "Does not match", {pre, post}      
+    end
+
+    # def when_(behaviour, [], {pre, post}) do
+    # end
+
+    def then(behaviour, [h|t], {pre, post}) do
         # We want to apply the action h and pass t as the args
-        apply(Actions, h, [t, {pre,post}])
+        apply(Actions, h, [behaviour, t, {pre, post}])
     end
 
 end
