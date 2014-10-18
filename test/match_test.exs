@@ -22,4 +22,16 @@ defmodule MatchTest do
     {ok, res} = Ddd.Matcher.process_line("when \"key\" was \"wednesday\"", {pre, post})
     assert(ok == :fail)
   end
+
+  test "basic match for is/was case of atom" do
+    pre = %{ "key": "friday"}
+    post = %{ "key": "friday"}
+
+    {ok, res} = Ddd.Matcher.process_line("When \"key\" was \"friday\"", {pre, post})
+    assert(ok == :ok)
+
+    {ok, res} = Ddd.Matcher.process_line("When \"key\" was \"wednesday\"", {pre, post})
+    assert(ok == :fail)
+  end
+
 end

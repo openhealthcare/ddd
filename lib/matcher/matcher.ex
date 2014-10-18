@@ -20,7 +20,7 @@ defmodule Ddd.Matcher do
          |> Enum.map(fn(x) ->
              case String.match?(x, ~r/\".*\"/) do
                 true -> String.replace("#{x}", "\"", "")
-                false -> String.to_atom(x)
+                false -> String.to_atom(String.downcase(x))
             end
         end)
 
@@ -33,8 +33,6 @@ defmodule Ddd.Matcher do
         # Replace when at start with when_
         case str do
             :when ->
-                :when_
-            :When ->
                 :when_
             :and ->
                 :when_
