@@ -34,24 +34,23 @@ defmodule Ddd.Matcher.Step do
     end
   end
 
-  def when_([key, :is, value], {pre, post}) do
-    match = json_property_matches key, post, value
-    case match do
-      true ->
-        {:ok, {pre,post}}
-      false ->
-        {:fail, "Does not match"}
+    defp provide_result(success, err \\ "", {pre, post}) do
+        case success do
+          true ->
+            {:ok, {pre,post}}
+          false ->
+            {:fail, err}
+        end
     end
-  end
+
+    def when_([key, :is, value], {pre, post}) do
+        match = json_property_matches key, post, value
+        provide_result match, "Does not match", {pre, post}
+    end
 
     def when_([key, :was, value], {pre, post}) do
         match = json_property_matches key, pre, value
-        case match do
-          true ->
-            {:ok, {pre, post}}
-          false ->
-            {:fail, "Does not match"}
-        end
+        provide_result match, "Does not match", {pre, post}
     end
 
     def then([h|t], {pre, post}) do
