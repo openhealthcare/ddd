@@ -30,6 +30,36 @@ defmodule Ddd.Decider do
 
         Path.wildcard("behaviours/*/*.behaviour")
           |> Enum.map(&(behave &1, :change, {pre, post, endpoint}))
+              
+      { :admit, params } ->
+        {:ok, episode} = Poison.decode("#{params[:episode]}")
+        endpoint    = params[:endpoint]
+
+        IO.puts "Called admit for endpoint #{endpoint}"
+
+        Path.wildcard("behaviours/*/*.behaviour")
+          |> Enum.map(&(behave &1, :admit, {%{}, episode, endpoint}))
+              
+      { :discharge, params } ->
+        {:ok, episode} = Poison.decode("#{params[:episode]}")
+        endpoint    = params[:endpoint]
+
+        IO.puts "Called discharge for endpoint #{endpoint}"
+
+        Path.wildcard("behaviours/*/*.behaviour")
+          |> Enum.map(&(behave &1, :discharge, {episode, episode, endpoint}))
+
+      { :transfer, params } ->
+        {:ok, pre}  = Poison.decode("#{params[:pre]}")
+        {:ok, post} = Poison.decode("#{params[:post]}")
+        endpoint    = params[:endpoint]
+
+        IO.puts "Called transfer for endpoint #{endpoint}"
+
+        Path.wildcard("behaviours/*/*.behaviour")
+          |> Enum.map(&(behave &1, :transfer, {pre, post, endpoint}))
+
+              
       _ ->
     end
   decide
