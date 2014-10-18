@@ -19,7 +19,9 @@
           <li><a href="/api/v0.1/">Get Started</a></li>
         </ul>
         <span class="logo">
-          <img src="/images/toplogo.png" width="289px" height="70px"/>
+          <a href="/">
+          <img src="/images/toplogo.png" width="289px" height="70px" border="0"/>
+          </a>
         </span>
       </div>
 
