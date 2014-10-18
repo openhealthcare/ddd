@@ -16,7 +16,7 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a href="https://github.com/openhealthcare/ddd">Get Started</a></li>
+          <li><a href="/api/v0.1/">Get Started</a></li>
         </ul>
         <span class="logo">
           <img src="http://openhealthcare.org.uk/assets/images/toplogo.png" />
