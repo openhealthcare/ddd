@@ -6,16 +6,20 @@ defmodule Ddd.Matcher.Step do
   string where . indicates a level down in the nested MAP
   """
   def get_value(key, map) do
-    [head | tail] = String.split to_string(key), "."
-
-    if tail == [] do
-      if is_map map do
-        map[key]
-      else
-        Enum.map( map, fn(x) -> x[to_string(key)] end )
-      end
+    if is_nil map do
+      nil
     else
-      get_value tail, map[head]
+      [head | tail] = String.split to_string(key), "."
+
+      if tail == [] do
+        if is_map map do
+          map[key]
+        else
+          Enum.map( map, fn(x) -> x[to_string(key)] end )
+        end
+      else
+        get_value tail, map[head]
+      end
     end
   end
 
@@ -27,11 +31,17 @@ defmodule Ddd.Matcher.Step do
   """
   def json_property_matches(key, map, value) do
     jsonvalue = get_value key, map
-    if is_list jsonvalue do
-      Enum.any? jsonvalue, fn(x) -> x == value end
-    else
-      jsonvalue == value
+    case jsonvalue do
+      jsonvalue ->
+        if is_list(jsonvalue) do
+          Enum.any? jsonvalue, fn(x) -> x == value end
+        else
+          jsonvalue == value
+        end
+        _ -> # nil case
+        false
     end
+
   end
 
   @doc"""
@@ -42,10 +52,15 @@ defmodule Ddd.Matcher.Step do
   """
   defp json_property_contains(key, map, value) do
     jsonvalue = get_value key, map
-    if is_list jsonvalue do
-      Enum.any? jsonvalue, fn(x) -> String.contains? String.downcase(x), String.downcase(value) end
-    else
-      String.contains? jsonvalue, value
+    case jsonvalue do
+      jsonvalue ->
+        if is_list jsonvalue do
+          Enum.any? jsonvalue, fn(x) -> String.contains? String.downcase(x), String.downcase(value) end
+        else
+          String.contains? jsonvalue, value
+        end
+      _ ->
+        false
     end
   end
 
@@ -63,14 +78,46 @@ defmodule Ddd.Matcher.Step do
         provide_result match, "Does not match", {pre, post}
     end
 
+    def when_(behaviour, [key, :is, :not, value], {pre, post}) do
+        match = json_property_matches key, post, value
+        provide_result !match, "Does not match", {pre, post}
+    end
+
     def when_(behaviour, [key, :was, value], {pre, post}) do
         match = json_property_matches key, pre, value
         provide_result match, "Does not match", {pre, post}
     end
 
+    def when_(behaviour, [key, :was, :not, value], {pre, post}) do
+        match = json_property_matches key, pre, value
+        provide_result !match, "Does not match", {pre, post}
+    end
+
     def when_(behaviour, [key, :did, :contain, value], {pre, post}) do
       match = json_property_contains key, pre, value
       provide_result match, "Does not match", {pre, post}      
+    end
+
+    def when_(behaviour, [key, :did, :not, :contain, value], {pre, post}) do
+      match = json_property_contains key, pre, value
+      provide_result !match, "Does not match", {pre, post}      
+    end
+
+    def when_(behaviour, [key, :contains, value], {pre, post}) do
+      match = json_property_contains key, post, value
+      provide_result match, "Does not match", {pre, post}
+    end
+
+    def when_(behaviour, [key, :does, :not, :contain, value], {pre, post}) do
+      match = json_property_contains key, post, value
+      provide_result !match, "Does not match", {pre, post}      
+    end
+
+    def when_(behaviour, [key, :changed, :to, value], {pre, post}) do
+      was = json_property_matches( key, pre, value)
+      is = json_property_matches key, post, value
+      match = !was and is
+      provide_result match, "Does not match", {pre, post}            
     end
 
     # def when_(behaviour, [], {pre, post}) do

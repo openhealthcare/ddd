@@ -8,7 +8,6 @@ defmodule Ddd.Matcher do
             {ok, msg} = process_line(filename, String.strip(x), {pre, post})
             case ok do
                 :fail ->
-                  IO.puts "Fails line"
                   success = false
                   false   # Abort (the take_while)
                 :ok ->
