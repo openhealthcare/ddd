@@ -21,7 +21,7 @@ defmodule Ddd.Matcher do
 
     def process_line(filename, sentence, {action, pre, post}) do
       # Regex tokenises in such a way that "ward 9" is one token
-      params = Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), fn(x) -> hd(x) end)
+      params = Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), &(hd(&1)))
          |> Enum.map(fn(x) ->
              case String.match?(x, ~r/\".*\"/) do
                 true -> String.replace("#{x}", "\"", "")
