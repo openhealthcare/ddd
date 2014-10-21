@@ -24,6 +24,7 @@ defmodule Ddd.Api01Controller do
 
   def admit(conn, %{ "episode" => episode, "endpoint" => endpoint }) do
     Phoenix.Topic.broadcast "decision", {:admit, episode: episode, endpoint: endpoint}
+    json conn, JSON.encode!(%{:success => "We got your admission. We'll be in touch."})
   end
 
   def admit(conn, _params) do
@@ -36,6 +37,7 @@ defmodule Ddd.Api01Controller do
 
   def discharge(conn, %{ "episode" => episode, "endpoint" => endpoint }) do
     Phoenix.Topic.broadcast "decision", {:discharge, episode: episode, endpoint: endpoint}
+    json conn, JSON.encode!(%{:success => "We got your discharge. We'll be in touch."})
   end
 
   def discharge(conn, _params) do
@@ -49,6 +51,7 @@ defmodule Ddd.Api01Controller do
   # ADT-A04 – Patient Registration
   def registration(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
     Phoenix.Topic.broadcast "decision", {:registration, pre: pre, post: post, endpoint: endpoint}
+    json conn, JSON.encode!(%{:success => "We got your registration. We'll be in touch."})
   end
 
   def registration(conn, _params) do
@@ -62,6 +65,7 @@ defmodule Ddd.Api01Controller do
   # ADT-A05 – patient pre-admission
   def preadmission(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
     Phoenix.Topic.broadcast "decision", {:preadmission, pre: pre, post: post, endpoint: endpoint}
+    json conn, JSON.encode!(%{:success => "We got your preadmission. We'll be in touch."})
   end
 
   def preadmission(conn, _params) do
@@ -75,6 +79,7 @@ defmodule Ddd.Api01Controller do
   # ADT-A08 – patient information update
   def update(conn, %{ "pre" => pre, "post" => post, "endpoint" => endpoint }) do
     Phoenix.Topic.broadcast "decision", {:update, pre: pre, post: post, endpoint: endpoint}
+    json conn, JSON.encode!(%{:success => "We got your update. We'll be in touch."})
   end
 
   def update(conn, _params) do
