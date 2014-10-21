@@ -13,7 +13,7 @@ defmodule Ddd.Decider do
   Perform BEHAVIOUR for ACTION with PRE and POST, returning to ENDPOINT as required
   """
   def behave(behaviour, action, {pre, post, endpoint}) do
-    Ddd.Matcher.process_block behaviour, {pre, post}
+    Ddd.Matcher.process_block behaviour, action, {pre, post}
   end
 
   @doc"""

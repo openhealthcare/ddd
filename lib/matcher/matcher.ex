@@ -1,11 +1,11 @@
 
 defmodule Ddd.Matcher do
 
-    def process_block(filename, {pre, post}) do
+    def process_block(filename, action, {pre, post}) do
         success = true
 
         File.stream!(filename, [:utf8, :read]) |> Enum.take_while fn(x) ->
-            {ok, msg} = process_line(filename, String.strip(x), {pre, post})
+            {ok, msg} = process_line(filename, String.strip(x), {action, pre, post})
             case ok do
                 :fail ->
                   success = false
@@ -19,8 +19,9 @@ defmodule Ddd.Matcher do
         success
     end
 
-    def process_line(filename, sentence, {pre, post}) do
-        params = String.split(sentence, " ")
+    def process_line(filename, sentence, {action, pre, post}) do
+      # Regex tokenises in such a way that "ward 9" is one token
+      params = Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), fn(x) -> hd(x) end)
          |> Enum.map(fn(x) ->
              case String.match?(x, ~r/\".*\"/) do
                 true -> String.replace("#{x}", "\"", "")
@@ -29,7 +30,7 @@ defmodule Ddd.Matcher do
         end)
 
         [f | args] = params
-        apply(Ddd.Matcher.Step, func_name(f), [filename, args, {pre,post}] )
+        apply(Ddd.Matcher.Step, func_name(f), [filename, args, {action, pre,post}] )
     end
 
 

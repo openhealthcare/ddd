@@ -26,7 +26,7 @@ defmodule Ddd.Matcher.Step do
       fn(x) -> String.contains? x, value end)
   end
 
-    defp provide_result(success, err \\ "", {pre, post}) do
+    defp provide_result(success, err \\ "", {action, pre, post}) do
         case success do
           true ->
             {:ok, {pre,post}}
@@ -35,59 +35,65 @@ defmodule Ddd.Matcher.Step do
         end
     end
 
-    def when_(behaviour, [key, :is, value], {pre, post}) do
+    def when_(behaviour, [key, :is, value], {action, pre, post}) do
         match = json_property_matches key, post, value
-        provide_result match, "Does not match", {pre, post}
+        provide_result match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :is, :not, value], {pre, post}) do
+    def when_(behaviour, [key, :is, :not, value], {action, pre, post}) do
         match = json_property_matches key, post, value
-        provide_result !match, "Does not match", {pre, post}
+        provide_result !match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :was, value], {pre, post}) do
+    def when_(behaviour, [key, :was, value], {action, pre, post}) do
         match = json_property_matches key, pre, value
-        provide_result match, "Does not match", {pre, post}
+        provide_result match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :was, :not, value], {pre, post}) do
+    def when_(behaviour, [key, :was, :not, value], {action, pre, post}) do
         match = json_property_matches key, pre, value
-        provide_result !match, "Does not match", {pre, post}
+        provide_result !match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :did, :contain, value], {pre, post}) do
+    def when_(behaviour, [key, :did, :contain, value], {action, pre, post}) do
       match = json_property_contains key, pre, value
-      provide_result match, "Does not match", {pre, post}
+      provide_result match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :did, :not, :contain, value], {pre, post}) do
+    def when_(behaviour, [key, :did, :not, :contain, value], {action, pre, post}) do
       match = json_property_contains key, pre, value
-      provide_result !match, "Does not match", {pre, post}
+      provide_result !match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :contains, value], {pre, post}) do
+    def when_(behaviour, [key, :contains, value], {action, pre, post}) do
       match = json_property_contains key, post, value
-      provide_result match, "Does not match", {pre, post}
+      provide_result match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :does, :not, :contain, value], {pre, post}) do
+    def when_(behaviour, [key, :does, :not, :contain, value], {action, pre, post}) do
       match = json_property_contains key, post, value
-      provide_result !match, "Does not match", {pre, post}
+      provide_result !match, "Does not match", {action, pre, post}
     end
 
-    def when_(behaviour, [key, :changed, :to, value], {pre, post}) do
+    def when_(behaviour, [key, :changed, :to, value], {action, pre, post}) do
       was = json_property_matches( key, pre, value)
       is = json_property_matches key, post, value
       match = !was and is
-      provide_result match, "Does not match", {pre, post}
+      provide_result match, "Does not match", {action, pre, post}
     end
 
-    # def when_(behaviour, [], {pre, post}) do
+    def when_(behaviour, [:admitted, :to, ward], {:admit, pre, post}) do
+      match = json_property_matches "location.ward", post, ward
+      provide_result match, "Does not match", {:admit, pre, post}      
+    end
+
+
+    # def when_(behaviour, [], {action, pre, post}) do
     # end
 
-    def then(behaviour, [h|t], {pre, post}) do
+    def then(behaviour, [h|t], {action, pre, post}) do
         # We want to apply the action h and pass t as the args
-        apply(Actions, h, [behaviour, t, {pre, post}])
+        apply(Actions, h, [behaviour, t, {action, pre, post}])
     end
 
 end
