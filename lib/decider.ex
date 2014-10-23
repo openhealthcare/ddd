@@ -62,6 +62,6 @@ defmodule Ddd.Decider do
               
       _ ->
     end
-  decide
+    decide
   end
 end
