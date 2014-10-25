@@ -10,7 +10,7 @@ config :phoenix, Ddd.Router,
   debug_errors: true
 
 config :phoenix, :code_reloader,
-  enabled: true
+  enabled: false
 
 config :logger, :console,
   level: :debug

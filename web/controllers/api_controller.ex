@@ -5,6 +5,20 @@ defmodule Ddd.Api01Controller do
     render conn, "index"
   end
 
+  def rules(conn, _params) do
+    json conn, JSON.encode! Ddd.Rules.ruletree
+  end
+
+  def rule_contents(conn, %{"path" => path}) do
+    IO.puts path
+    json conn, JSON.encode! Ddd.Rules.contents(path)
+  end
+  
+  def update_rule(conn, %{"rule" => rule, "contents" => contents}) do
+    Ddd.Rules.update rule, contents
+    json conn, JSON.encode! %{:success => "Updated #{rule}"}
+  end
+  
   def changedoc(conn, _params) do
     render conn, "change"
   end

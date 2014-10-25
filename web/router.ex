@@ -3,8 +3,16 @@ defmodule Ddd.Router do
 
   get "/", Ddd.PageController, :index, as: :pages
 
+  get "/rules/", Ddd.EditorController, :editor
+
+  # Begins API
+  
   get "/api/v0.1/", Ddd.Api01Controller, :index
 
+  get "/api/v0.1/rules/", Ddd.Api01Controller, :rules
+  get "/api/v0.1/rules/contents/*path", Ddd.Api01Controller, :rule_contents
+  post "/api/v0.1/rules/contents", Ddd.Api01Controller, :update_rule
+  
   get "/api/v0.1/change/", Ddd.Api01Controller, :changedoc
   post "/api/v0.1/change/", Ddd.Api01Controller, :change
 

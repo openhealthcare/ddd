@@ -1,0 +1,40 @@
+<script type="text/javascript" src="/js/underscore.js"></script>
+<script type="text/javascript" src="/js/bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+<script type="text/javascript" src="/js/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/js/bower_components/angular-ui-ace/ui-ace.js"></script>
+
+<script type="text/javascript" src="/js/angular.treeview.js"></script>
+<link rel="stylesheet" href="/css/angular.treeview.css">
+<script type="text/javascript" src="/js/editor.js"></script>
+
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Editor</li>
+</ol>
+<h1>Rules Editor</h1>
+<div ng-controller="EditorCtrl">
+  <div class="row">
+  <div
+     class="col-md-4"
+     data-angular-treeview="true"
+     data-tree-id="behaviours"
+     data-tree-model="treedata"
+     data-node-id="id"
+     data-node-label="label"
+     data-node-children="children" >
+  </div>
+  
+  <div
+     class="col-md-7"
+     ui-ace="{
+               useWrapMode : true,
+               showGutter: true,
+               theme:'twilight',
+               mode: 'python',
+               firstLineNumber: 5,
+               onLoad: aceLoaded,
+               onChange: aceChanged
+               }"></div>
+  </div>
+</div>

@@ -12,7 +12,9 @@
   <div class="col-lg-6">
     <h4>Resources</h4>
     <ul>
-        <li>
+      <li><a href="/api/v0.1/">Online API docs</a></li>
+      </li>
+      <li>
         <a href="https://github.com/openhealthcare/ddd">Source</a>
       </li>
     </ul>

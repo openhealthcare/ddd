@@ -1,4 +1,8 @@
 /* Space out content a bit */
+.ace_editor {
+    height: 200px;
+}
+
 body {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -33,7 +37,7 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+
   }
 }
 .container-narrow > hr {
@@ -111,7 +115,7 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+
   }
 }
 .container-narrow > hr {
@@ -154,7 +158,6 @@ body {
     border-bottom: 0;
   }
 }
-
 .apilist td {
   padding: 8px;
   width: 33%;

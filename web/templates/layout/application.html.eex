@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="/css/ddd.css">
   </head>
 
-  <body>
+  <body ng-app="ddd">
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/api/v0.1/">Get Started</a></li>
+          <li><a href="/rules/">Get Started</a></li>
         </ul>
         <span class="logo">
           <a href="/">
