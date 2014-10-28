@@ -19,20 +19,29 @@ defmodule Ddd.Matcher do
         success
     end
 
-    def process_line(filename, sentence, {action, pre, post}) do
-      # Regex tokenises in such a way that "ward 9" is one token
-      params = Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), &(hd(&1)))
+    defp sentence_params(sentence) do
+      Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), &(hd(&1)))
          |> Enum.map(fn(x) ->
              case String.match?(x, ~r/\".*\"/) do
                 true -> String.replace("#{x}", "\"", "")
                 false -> String.to_atom(String.downcase(x))
             end
         end)
-
-        [f | args] = params
-        apply(Ddd.Matcher.Step, func_name(f), [filename, args, {action, pre,post}] )
     end
 
+    def process_line(filename, sentence, {action, pre, post}) do
+      # Regex tokenises in such a way that "ward 9" is one token
+      params = sentence_params(sentence)
+
+      [f | args] = params
+      apply(Ddd.Matcher.Step, func_name(f), [filename, args, {action, pre,post}] )
+    end
+
+    def can_evaluate?(sentence) do
+      params = sentence_params(sentence)
+      [f | args] = params
+
+    end
 
     def func_name(str) do
         # Replace when at start with when_
@@ -45,6 +54,5 @@ defmodule Ddd.Matcher do
                 str
         end
     end
-
 
 end
