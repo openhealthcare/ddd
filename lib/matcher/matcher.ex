@@ -19,7 +19,7 @@ defmodule Ddd.Matcher do
         success
     end
 
-    defp sentence_params(sentence) do
+    def parse_sentence(sentence) do
       Enum.map(Regex.scan(~r/[^\s"]+|"([^"]*)"/, sentence), &(hd(&1)))
          |> Enum.map(fn(x) ->
              case String.match?(x, ~r/\".*\"/) do
@@ -31,16 +31,28 @@ defmodule Ddd.Matcher do
 
     def process_line(filename, sentence, {action, pre, post}) do
       # Regex tokenises in such a way that "ward 9" is one token
-      params = sentence_params(sentence)
+      params = parse_sentence(sentence)
 
       [f | args] = params
       apply(Ddd.Matcher.Step, func_name(f), [filename, args, {action, pre,post}] )
     end
 
+    @doc """
+      Determines whether the provided sentence could be parsed/processed or not.
+    """
     def can_evaluate?(sentence) do
-      params = sentence_params(sentence)
-      [f | args] = params
+      params = Enum.map(parse_sentence(sentence), fn(x) ->
+        case is_atom(x) do
+          true -> func_name(x)
+          false -> ""
+        end
+      end)
+      params in defined_rules
+    end
 
+    defp defined_rules do
+      attribs = Ddd.Matcher.Step.__info__(:attributes)
+      for {:rules, r} <- attribs, do: r
     end
 
     def func_name(str) do

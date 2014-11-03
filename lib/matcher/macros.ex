@@ -20,7 +20,6 @@ defmodule Ddd.Macros  do
 
     quote do
       @rules [unquote(f)|unquote(m)]
-      IO.inspect @rules
       def unquote(signature) do
         unquote(body[:do])
       end

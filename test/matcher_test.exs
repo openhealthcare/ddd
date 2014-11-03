@@ -111,10 +111,16 @@ defmodule MatcherTest do
     assert ok == :fail
   end
 
-  test "rule count" do
-    # Not an actual test yet, but helpful for me to work with.
-    attribs = Ddd.Matcher.Step.__info__(:attributes)
-    rules = for {:rules, r} <- attribs, do: r
-    assert length(rules) > 0
+  test "is rule is valid" do
+    assert Ddd.Matcher.can_evaluate?("When \"X\" is \"Y\"")
   end
+
+  test "made up rule is invalid" do
+    assert not Ddd.Matcher.can_evaluate?("When \"X\" likes \"Y\"")
+  end
+
+  test "rule with extra spaces is still valid" do
+    assert Ddd.Matcher.can_evaluate?("When   \"X\"      is \"Y\"")
+  end
+
 end

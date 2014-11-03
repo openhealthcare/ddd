@@ -1,5 +1,5 @@
 defmodule Ddd.Rules do
-  
+
   defp to_ruletree(tree, rules) do
     if length(rules) == 0 do
       tree
@@ -27,9 +27,9 @@ defmodule Ddd.Rules do
     {:ok, bin } = File.read target
     bin
   end
-  
+
   def update(rule, contents) do
     File.write rule, contents
   end
-  
+
 end
