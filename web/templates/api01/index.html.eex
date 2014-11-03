@@ -106,6 +106,17 @@
             </div>
         </td>
         <td>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Valid Rule</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        Checks whether a sentence can be processed
+                    </div>
+                    <a class="btn" href="/api/v0.1/rules/check">Read more</a>
+                </div>
+            </div>
         </td>
         <td>
         </td>
