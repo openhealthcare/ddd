@@ -103,7 +103,7 @@ defmodule MatcherTest do
 
   test "basic match for admitted to" do
     ward8 = %{ "location" => [ %{ "ward" => "Ward 8"} ] }
-    
+
     {ok, _} = Ddd.Matcher.process_line @fb, ~s(When admitted to "Ward 8"), {:admit, @empty, ward8}
     assert ok == :ok
 
@@ -111,4 +111,10 @@ defmodule MatcherTest do
     assert ok == :fail
   end
 
+  test "rule count" do
+    # Not an actual test yet, but helpful for me to work with.
+    attribs = Ddd.Matcher.Step.__info__(:attributes)
+    rules = for {:rules, r} <- attribs, do: r
+    assert length(rules) > 0
+  end
 end

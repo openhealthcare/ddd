@@ -1,8 +1,7 @@
 defmodule Ddd.Matcher.Step do
-    import Ddd.Macros, only: [defrule: 2]
+    use Ddd.Macros
     alias Ddd.Actions, as: Actions
 
-  @rules []
 
   @doc"""
   For a nested series of JSON objects MAP, find out if there is a

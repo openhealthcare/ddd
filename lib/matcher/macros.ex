@@ -1,5 +1,11 @@
 defmodule Ddd.Macros  do
 
+  defmacro __using__(_opts) do
+    quote do
+      import unquote(__MODULE__)
+      Module.register_attribute __MODULE__, :rules, accumulate: true, persist: true
+    end
+  end
 
   defmacro defrule(signature, body) do
     f = elem(signature, 0)
@@ -13,7 +19,8 @@ defmodule Ddd.Macros  do
     end
 
     quote do
-      @rules [[unquote(f)|unquote(m)] | @rules]
+      @rules [unquote(f)|unquote(m)]
+      IO.inspect @rules
       def unquote(signature) do
         unquote(body[:do])
       end
