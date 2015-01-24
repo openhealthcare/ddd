@@ -35,5 +35,5 @@ defmodule Ddd.Mixfile do
 
   defp external_actions(:test), do: false
   defp external_actions(_), do: true
-  
+
 end

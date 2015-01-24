@@ -10,6 +10,9 @@
     <title>Hello DDD!</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/ddd.css">
+
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
   </head>
 
   <body ng-app="ddd">

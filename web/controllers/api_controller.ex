@@ -22,9 +22,17 @@ defmodule Ddd.Api01Controller do
     json conn, JSON.encode! Ddd.Rules.contents(path)
   end
 
-  def update_rule(conn, %{"rule" => rule, "contents" => contents}) do
-    Ddd.Rules.update rule, contents
-    json conn, JSON.encode! %{:success => "Updated #{rule}"}
+  def update_rule(conn, %{"path" => path, "contents" => contents}) do
+    Ddd.Rules.update path, contents
+    json conn, JSON.encode! %{:success => "Updated #{path}"}
+  end
+
+  def add_rule(conn, %{"rule" => rule, "path" => path}) do
+    [folder,name] = Ddd.Rules.add(rule, path)
+    case folder do
+      nil -> json conn, JSON.encode! %{:error => "The rule already exists" }
+      _ -> json conn, JSON.encode! %{:success => true, :folder => folder, :name => name }
+    end
   end
 
   def changedoc(conn, _params) do

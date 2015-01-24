@@ -29,7 +29,28 @@ defmodule Ddd.Rules do
   end
 
   def update(rule, contents) do
-    File.write rule, contents
+    File.write "behaviours/" <> rule, contents
+  end
+
+  @doc """
+  The add function will add a new rule by creating a new file
+  in the appropriate place (which is empty initially).  It will
+  return true on success, false if the file already exists.
+
+  TODO: Let it also specify the path
+  """
+  def add(rule, path) do
+
+    p = "behaviours/sample/" <> rule <> ".behaviour"
+    exists = File.exists?(p)
+    if not exists do
+      File.write p, ""
+    end
+
+    case exists do
+      false -> ["sample","#{rule}.behaviour"]
+      true -> [nil,nil]
+    end
   end
 
 end
